@@ -1,10 +1,12 @@
 # Projet_python
-**features:**
-Interface:
-    - Graphiques 2.5D
-    - minimap globale
-    - rendu des troupes (dynamique) + terrain
 
-Unités:
+## Fonctionnalités
 
-IA:
+### Interface
+- Graphiques 2.5D
+- Minimap globale
+- Rendu des troupes (dynamique) + terrain
+
+### Unités
+
+### IA

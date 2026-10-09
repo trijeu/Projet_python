@@ -30,15 +30,18 @@ def creation_tuile(x, y):
         (ax, ay + TUILE_H /2),
         (ax -TUILE_W /2, ay)
     ]
-    pygame.draw.polygon(screen, (0, 0, 255), points)
+    pygame.draw.polygon(screen, (65, 21, 255), points)
 while game:
-
+    screen.fill("black")
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game = False
 
+    for i in range(16):
+        for j in range(16):
+            creation_tuile(i, j)
 
-    screen.fill("black")
+
     pygame.display.flip()
 
     clock.tick(100)

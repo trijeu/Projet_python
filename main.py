@@ -2,6 +2,7 @@ import pygame
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
+pygame.display.set_caption("Projet Python 3a AOE")
 clock = pygame.time.Clock()
 
 game = True

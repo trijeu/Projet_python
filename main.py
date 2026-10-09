@@ -14,6 +14,8 @@ while game:
         if event.type == pygame.QUIT:
             game = False
 
+            git
+
 
     screen.fill("black")
     pygame.display.flip()

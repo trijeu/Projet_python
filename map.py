@@ -15,7 +15,8 @@ TUILE_H = 32
 
 #Paramètres caméra
 OFFSET_X = W / 2
-OFFSET_Y = H / 2
+OFFSET_Y = H /4
+VITESSE_CAM = 5
 
 def convertisseur_iso(x, y):
     affichagex = (x - y) * TUILE_W / 2 + OFFSET_X
@@ -30,13 +31,21 @@ def creation_tuile(x, y):
         (ax, ay + TUILE_H /2),
         (ax -TUILE_W /2, ay)
     ]
-    pygame.draw.polygon(screen, (65, 21, 255), points)
+    pygame.draw.polygon(screen, (50, 105, 19), points)
 while game:
     screen.fill("black")
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game = False
-
+    eventpress = pygame.key.get_pressed()
+    if eventpress[pygame.K_LEFT]:
+        OFFSET_X += VITESSE_CAM
+    if eventpress[pygame.K_RIGHT]:
+        OFFSET_X -= VITESSE_CAM
+    if eventpress[pygame.K_UP]:
+        OFFSET_Y += VITESSE_CAM
+    if eventpress[pygame.K_DOWN]:
+        OFFSET_Y += VITESSE_CAM
     for i in range(16):
         for j in range(16):
             creation_tuile(i, j)

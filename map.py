@@ -45,7 +45,7 @@ while game:
     if eventpress[pygame.K_UP]:
         OFFSET_Y += VITESSE_CAM
     if eventpress[pygame.K_DOWN]:
-        OFFSET_Y += VITESSE_CAM
+        OFFSET_Y -= VITESSE_CAM
     for i in range(16):
         for j in range(16):
             creation_tuile(i, j)

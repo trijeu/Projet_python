@@ -5,7 +5,7 @@ TRAVAIL VACANCES OCTOBRE
 
 Changer les tiles pour ajouter une texture -> changer la création de Tiles
 Ajouter un système de Zoom Dezoom 
-Minimap, event ('onmouse click --> change coordonnées de la caméra avec celle clique sur la minimap')
+Minimap, event (' onmouse click --> change coordonnées de la caméra avec celle clique sur la minimap')
 Ajout unité qui avance de manière random
 
 """

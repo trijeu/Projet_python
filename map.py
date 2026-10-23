@@ -1,5 +1,16 @@
 import pygame
 
+""" 
+TRAVAIL VACANCES OCTOBRE
+
+Changer les tiles pour ajouter une texture -> changer la création de Tiles
+Ajouter un système de Zoom Dezoom 
+Minimap, event ('onmouse click --> change coordonnées de la caméra avec celle clique sur la minimap')
+Ajout unité qui avance de manière random
+
+"""
+
+
 pygame.init()
 #Taille de la fenêtre
 W = 1280
@@ -16,7 +27,7 @@ TUILE_H = 32
 #Paramètres caméra
 OFFSET_X = W / 2
 OFFSET_Y = H /4
-VITESSE_CAM = 5
+VITESSE_CAM = 10
 
 def convertisseur_iso(x, y):
     affichagex = (x - y) * TUILE_W / 2 + OFFSET_X
@@ -32,6 +43,8 @@ def creation_tuile(x, y):
         (ax -TUILE_W /2, ay)
     ]
     pygame.draw.polygon(screen, (50, 105, 19), points)
+    #Pour séparer les tuiles
+    pygame.draw.polygon(screen, (0, 0, 0), points, 1)
 while game:
     screen.fill("black")
     for event in pygame.event.get():
@@ -46,8 +59,8 @@ while game:
         OFFSET_Y += VITESSE_CAM
     if eventpress[pygame.K_DOWN]:
         OFFSET_Y -= VITESSE_CAM
-    for i in range(16):
-        for j in range(16):
+    for i in range(120):
+        for j in range(120):
             creation_tuile(i, j)
 
 

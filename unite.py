@@ -1,7 +1,7 @@
 #classe abstraite
 
 class Unite:
-    def __init__(self, vie: int, degat: int, type_degat: str, reload: float, melee_armor: int, peircing_armor: int, portee: int, speed: float, LoS: int, taille: float):
+    def __init__(self, x: float, y: float, vie: int, degat: int, type_degat: str, reload: float, melee_armor: int, peircing_armor: int, portee: int, speed: float, LoS: int, taille: float):
         self.vie = vie
         self.degat = degat
         self.type_degat = type_degat
@@ -12,6 +12,8 @@ class Unite:
         self.speed = speed
         self.LoS = LoS
         self.taille = taille
+        self.x = x
+        self.y = y
 
 
 

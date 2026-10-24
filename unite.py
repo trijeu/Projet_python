@@ -23,4 +23,8 @@ class Unite:
             degat = self.degat - cible.peircing_armor + bonus
 
         cible.vie -= degat
+
+    def deplacer(self ,nouveau_x,nouveau_y):
+        self.x=nouveau_x
+        self.y=nouveau_y
     

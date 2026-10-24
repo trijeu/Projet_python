@@ -1,6 +1,6 @@
 from unite import Unite
 
-class UniteRomaine(AbstractUnit):
+class UniteRomaine(Unite):
 
     def __init__(
         self,

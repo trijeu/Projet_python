@@ -1,3 +1,5 @@
+from typing import Self
+
 from unite import Unite
 
 
@@ -25,9 +27,8 @@ class UniteCataphract(UniteParthe):
         self.trample_damage_zone = 0.5
 
     def trample_attack(self, cibles_alentour: list):
-
-    for cible in cibles_alentour:
-        self.attaquer(cible, type_attaque="melee")
+        for cible in cibles_alentour:
+            self.attaquer(cible, type_attaque="melee")
 
 
 class UniteCastle(UniteParthe):
@@ -48,9 +49,8 @@ class UniteCastle(UniteParthe):
         self.volley_count = 5  # Tir de salve (5 flèches)
 
     def attaquer_salve(self, cible: Unite):
-
-    for _ in range(self.volley_count):
-        self.attaquer(cible, type_attaque="piercing")
+        for _ in range(self.volley_count):
+            self.attaquer(cible, type_attaque="piercing")
 
 
 class UniteArchers(UniteParthe):

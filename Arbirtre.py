@@ -1,6 +1,5 @@
-from classe_1 import Legionnaire
+from UniteRomaine import Legionnaire
 from UnitéParthes import UniteArchers
-""" y a un soucis avec unites parthes il y a espace dans le non et ca rend difficile d importer"""
 
 class Arbirtre:
     def __init__(self,taille_carte = 120):

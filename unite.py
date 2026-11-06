@@ -18,18 +18,26 @@ class Unite:
 
 
 
-    def attaquer(self, attaque, type_attaque, bonus = 0):
-        if type_attaque == "melee":
-            armure = self.melee_armor
-        elif type_attaque == "piercing":
-            armure = self.piercing_armor
-        else: 
-            raise ValueError("Type d'attaque invalide")
 
-        damage = max(1, attaque - armure + bonus)
-        self.hp = max(0, self.hp - damage)
-        if self.hp == 0:
-            self.alive = False
+    def attaquer(self, cible: "Unite", type_attaque: str = None, bonus: int = 0):
+
+        if type_attaque is None:
+            type_attaque = self.type_degat
+
+        if type_attaque == "melee":
+            armure = cible.melee_armor
+
+        elif type_attaque=="piercing" :
+            armure = cible.piercing_armor
+
+        else:
+            raise ValueError(f"Type d'attaque inconnu : {type_attaque}")
+
+        degats = max(1, self.degat + bonus - armure)
+
+        cible.vie = max(0, cible.vie - degats)
+
+        return degats
 
 
     def deplacer(self ,nouveau_x,nouveau_y):

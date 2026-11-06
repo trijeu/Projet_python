@@ -1,6 +1,6 @@
 from unite import Unite
 
-class UniteRomaine(Unite):
+'''class UniteRomaine(Unite):
 
     def __init__(
         self,
@@ -29,23 +29,25 @@ class UniteRomaine(Unite):
             speed,
             taille,
         )
-    
+    '''#Nouvelle version de l'init selon les nouveaux paramètres de Unite
 
-class Legionnaire(UniteRomaine):
+class Legionnaire(Unite):
 
-    def __init__(self, x: float, y: float):
+    def __init__(self, uid: int, x: float, y: float):
         super().__init__(
+            uid=uid,
+            team = "romain",
             x=x,
             y=y,
-            vie=75,
-            degat=18,
-            type_degat="melee",
-            reload=2.0,
+            hp=75,
+            attack=18,
+            type_attack="melee",
+            reload_time=2.0,
             melee_armor=6,
             piercing_armor=6,
-            portee=0,
+            range=0,
             speed=1.06,
-            taille=0.4,
+            radius=0.4,
         )
         self.mur_de_boucliers_actif = False
 
@@ -57,21 +59,23 @@ class Legionnaire(UniteRomaine):
             self.piercing_armor -= 6
             self.mur_de_boucliers_actif = False
 
-class Trebuchet(UniteRomaine):
+class Trebuchet(Unite):
 
-    def __init__(self, x: float, y: float):
+    def __init__(self, uid: int, x: float, y: float):
         super().__init__(
+            uid=uid,
+            team = "romain",
             x=x,
             y=y,
-            vie=150,
-            degat=250,
-            type_degat="piercing",
-            reload=0.0,
+            hp=150,
+            attack=250,
+            type_attack="piercing",
+            reload_time=0.0,
             melee_armor=2,
             piercing_armor=8,
-            portee=0,
+            range=0,
             speed=0.8,
-            taille=1.0,
+            radius=1.0,
         )
         self.temps_depaquetage = 11.0
         self.est_depaquete = False

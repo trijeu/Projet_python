@@ -1,5 +1,5 @@
-from classe_1 import Legionnaire
-from UnitéParthes import UniteArchers
+
+from UniteRomaine import Legionnaire
 """ y a un soucis avec unites parthes il y a espace dans le non et ca rend difficile d importer"""
 
 class Arbirtre:

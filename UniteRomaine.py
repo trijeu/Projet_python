@@ -11,10 +11,9 @@ class UniteRomaine(Unite):
         type_degat: str,
         reload: float,
         melee_armor: int,
-        peircing_armor: int,
+        piercing_armor: int,
         portee: int,
         speed: float,
-        LoS: int,
         taille: float,
     ):
         super().__init__(
@@ -25,12 +24,10 @@ class UniteRomaine(Unite):
             type_degat,
             reload,
             melee_armor,
-            peircing_armor,
+            piercing_armor,
             portee,
             speed,
-            LoS,
             taille,
-            "Romain",
         )
     
 
@@ -45,20 +42,19 @@ class Legionnaire(UniteRomaine):
             type_degat="melee",
             reload=2.0,
             melee_armor=6,
-            peircing_armor=6,
+            piercing_armor=6,
             portee=0,
             speed=1.06,
-            LoS=7,
             taille=0.4,
         )
         self.mur_de_boucliers_actif = False
 
     def basculer_mur_de_boucliers(self, actif: bool):
         if actif and not self.mur_de_boucliers_actif:
-            self.peircing_armor += 6
+            self.piercing_armor += 6
             self.mur_de_boucliers_actif = True
         elif not actif and self.mur_de_boucliers_actif:
-            self.peircing_armor -= 6
+            self.piercing_armor -= 6
             self.mur_de_boucliers_actif = False
 
 class Trebuchet(UniteRomaine):
@@ -69,13 +65,12 @@ class Trebuchet(UniteRomaine):
             y=y,
             vie=150,
             degat=250,
-            type_degat="peircing",
+            type_degat="piercing",
             reload=0.0,
             melee_armor=2,
-            peircing_armor=8,
+            piercing_armor=8,
             portee=0,
             speed=0.8,
-            LoS=19,
             taille=1.0,
         )
         self.temps_depaquetage = 11.0

@@ -1,10 +1,12 @@
+from typing import Self
+
 from unite import Unite
 
 
 class UniteParthe(Unite):
     def __init__(self, x: float, y: float, vie: int, degat: int, type_degat: str, reload: float,
-                 melee_armor: int, piercing_armor: int, portee: int, speed: float, LoS: int, taille: float):
-        super().__init__(x, y, vie, degat, type_degat, reload, melee_armor, piercing_armor, portee, speed, LoS, taille)
+                 melee_armor: int, piercing_armor: int, portee: int, speed: float, taille: float):
+        super().__init__(x, y, vie, degat, type_degat, reload, melee_armor, piercing_armor, portee, speed, taille)
 
 
 class UniteCataphract(UniteParthe):
@@ -19,15 +21,13 @@ class UniteCataphract(UniteParthe):
             piercing_armor=5,
             portee=0,
             speed=1.35,
-            LoS=4,
             taille=0.5
         )
         self.trample_damage_zone = 0.5
 
     def trample_attack(self, cibles_alentour: list):
-
-    for cible in cibles_alentour:
-        self.attaquer(cible, type_attaque="melee")
+        for cible in cibles_alentour:
+            self.attaquer(cible, type_attaque="melee")
 
 
 class UniteCastle(UniteParthe):
@@ -42,15 +42,13 @@ class UniteCastle(UniteParthe):
             piercing_armor=13,
             portee=11,
             speed=0,
-            LoS=11,
             taille=0
         )
         self.volley_count = 5  # Tir de salve (5 flèches)
 
     def attaquer_salve(self, cible: Unite):
-
-    for _ in range(self.volley_count):
-        self.attaquer(cible, type_attaque="piercing")
+        for _ in range(self.volley_count):
+            self.attaquer(cible, type_attaque="piercing")
 
 
 class UniteArchers(UniteParthe):
@@ -65,6 +63,5 @@ class UniteArchers(UniteParthe):
             piercing_armor=6,
             portee=8,
             speed=1.44,
-            LoS=6,
             taille=0.5
         )

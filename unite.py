@@ -54,7 +54,7 @@ class Unite:
         self.destination = None
 
 
-    def attaquer(self, attack, attack_type, bonus = 0):
+    def take_damage(self, attack, attack_type, bonus = 0):#Self prend des dégats en paramètres
         if attack_type == "melee":
             armure = self.melee_armor
         elif attack_type == "piercing":
@@ -67,8 +67,24 @@ class Unite:
         if self.hp == 0:
             self.is_alive = False
 
+    def attaquer(self, cible: "Unite", type_attaque: str = None, bonus: int = 0):#self attaque une cible
+        if type_attaque is None:
+            type_attaque = self.type_degat
 
-    def deplacer(self ,target_x,target_y, dt):
+        if type_attaque == "melee":
+            armure = cible.melee_armor
+
+        elif type_attaque=="piercing" :
+            armure = cible.piercing_armor
+
+        else:
+            raise ValueError(f"Type d'attaque inconnu : {type_attaque}")
+
+        degats = max(1, self.degat + bonus - armure)
+        cible.vie = max(0, cible.vie - degats)
+
+
+    def deplacer(self ,target_x,target_y, dt):#Deplace self en fct de dt, speed et target_x_y
         if not self.is_alive:
             return
 
@@ -83,7 +99,7 @@ class Unite:
         self.x += (dx / distance) * etape
         self.y += (dy / distance) * etape
     
-    def update_cooldown(self, dt):
+    def update_cooldown(self, dt):#met a jour le cooldown d'attaque de self en fct de dt
         if self.cooldown > 0:
             self.cooldown = max(0, self.cooldown - dt)
 

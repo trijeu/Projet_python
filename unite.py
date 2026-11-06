@@ -14,7 +14,7 @@ class Unite:
         self.x = x
         self.y = y
         self.cooldown = 0.0
-        self.alive = True """
+        self.alive = True """#Nouvelle version de l'init selon les nouveaux paramètres de Unite
 
 
     def __init__(

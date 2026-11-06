@@ -5,7 +5,7 @@ from unite import Unite
     def __init__(self, x: float, y: float, vie: int, degat: int, type_degat: str, reload: float,
                  melee_armor: int, piercing_armor: int, portee: int, speed: float, taille: float):
         super().__init__(x, y, vie, degat, type_degat, reload, melee_armor, piercing_armor, portee, speed, taille)
-'''
+'''#Nouvelle version de l'init selon les nouveaux paramètres de Unite
 
 class UniteCataphract(Unite):
     def __init__(self,uid: int, x: float, y: float):
@@ -53,7 +53,7 @@ class UniteCastle(Unite):
     def attaquer_salve(self, cible: Unite):
         for _ in range(self.volley_count):
             self.attaquer(cible, type_attaque="piercing")
-'''
+'''#Le chateau sera dans une classe à part, il est unique et un objectif
 
 class UniteArchers(Unite):
     def __init__(self,uid: int, x: float, y: float):

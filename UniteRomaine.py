@@ -29,7 +29,7 @@ from unite import Unite
             speed,
             taille,
         )
-    '''
+    '''#Nouvelle version de l'init selon les nouveaux paramètres de Unite
 
 class Legionnaire(Unite):
 

@@ -8,6 +8,7 @@ class Battlefield :
         self.obstacles= []
         self.castle = None
 
+
     def ajouter_unite(self,unite: Unite) :
         self.unites.append(unite)
 

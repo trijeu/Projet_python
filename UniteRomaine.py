@@ -80,6 +80,39 @@ class Trebuchet(Unite):
             radius=1.0,
         )
         self.temps_depaquetage = 11.0
+        self.temps_restant_depaquetage = 0.0
         self.est_depaquete = False
         self.precision_chateau = 0.8
         self.precision_unites = 0.15  
+
+    def deplier(self):
+        if not self.est_depaquete and self.temps_restant_depaquetage <= 0:
+            self.destination = None
+            self.temps_restant_depaquetage = self.temps_depaquetage
+
+
+    def update(self, dt):
+        self.update(dt)
+
+        if self.temps_restant_depaquetage > 0:
+            self.temps_restant_depaquetage = max(0, self.temps_restant_depaquetage - dt)
+
+            if self.temps_restant_depaquetage == 0:
+                self.est_depaquete = True
+            return
+
+        if not self.est_depaquete:
+            self.deplacer(dt)
+
+
+    def attaquer(self, cible, type_attaque=None, bonus=0):
+        if not self.est_depaquete:
+            return False
+
+        return super().attaquer(cible, type_attaque, bonus)
+
+
+    def replier(self):
+        self.est_depaquete = False
+        self.temps_restant_depaquetage = 0.0
+        self.cooldown = 0.0

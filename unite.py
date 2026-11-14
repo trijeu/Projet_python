@@ -51,7 +51,7 @@ class Unite:
         self.is_alive = True
         self.cooldown = 0.0
         self.target = None
-        self.destination = ()
+        self.destination = () #destination tuple (x, y) vers laquelle l'unité se déplace
 
 
     def take_damage(self, attack, attack_type, bonus = 0):#Self prend des dégats en paramètres

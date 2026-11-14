@@ -24,6 +24,7 @@ class Unite:
         x,
         y,
         hp,
+        max_hp,
         attack,
         attack_type,
         reload_time,
@@ -38,6 +39,7 @@ class Unite:
         self.x = x
         self.y = y
         self.hp = hp
+        self.max_hp = max_hp
         self.attack = attack
         self.attack_type = attack_type
         self.reload_time = reload_time
@@ -54,7 +56,22 @@ class Unite:
         self.destination = None #destination tuple (x, y) vers laquelle l'unité se déplace
 
 
-    def take_damage(self, attack, attack_type, bonus = 0):#Self prend des dégats en paramètres
+    def distance(self,cible) -> float:#Retourne la distance entre self et cible
+        return ((self.x - cible.x) ** 2 + (self.y - cible.y) ** 2) ** 0.5
+
+
+    def est_a_portee(self, cible) -> bool:
+        type_attaque = self.attack_type
+        distance = self.distance(cible)
+
+        if type_attaque == "piercing" and self.range > 0:
+            return distance <= self.range + cible.radius
+        if type_attaque == "melee":
+            portee = self.radius + cible.radius + 0.25 #On ajoute une petite marge au corps à corps
+            return distance <= portee
+
+
+    def take_damage(self, attack, attack_type, bonus = 0):#Méthode interne, utiliser attaquer() pour infliger des dégâts à une cible
         if attack_type == "melee":
             armure = self.melee_armor
         elif attack_type == "piercing":
@@ -67,24 +84,25 @@ class Unite:
         if self.hp == 0:
             self.is_alive = False
 
-    """def attaquer(self, cible: "Unite", attack_type: str = None, bonus: int = 0):#self attaque une cible
-        if attack_type is None:
-            attack_type = self.attack_type
 
-        if attack_type == "melee":
-            armure = cible.melee_armor
+    def attaquer(self, cible: "Unite", type_attaque: str = None, bonus: int = 0) -> bool:#Renvoie un bool si l'attaque réussit
+        if not self.is_alive:
+            return False
+        if not cible.is_alive:
+            return False
+        if self.cooldown > 0:
+            return False
+        
+        attack_type = type_attaque or self.attack_type
+        if not self.est_a_portee(cible):
+            return False
 
-        elif attack_type=="piercing" :
-            armure = cible.piercing_armor
-
-        else:
-            raise ValueError(f"Type d'attaque inconnu : {attack_type}")
-
-        degats = max(1, self.attack + bonus - armure)
-        cible.hp = max(0, cible.hp - degats)"""#Voir take_damage pour moins de paramètres
+        cible.take_damage(self.attack, attack_type, bonus)
+        self.cooldown = self.reload_time
+        return True
 
 
-    def deplacer(self, dt):#Deplace self en fct de dt, speed et sa destination
+    def deplacer(self, dt):#Méthode interne, euiliser update() ,deplace self en fct de dt, speed et sa destination
         if not self.is_alive:
             return
         if self.destination is None:
@@ -103,8 +121,9 @@ class Unite:
         self.x += (dx / distance) * etape
         self.y += (dy / distance) * etape
     
-    def update_cooldown(self, dt):#met a jour le cooldown d'attaque de self en fct de dt
+    def update(self, dt):#met a jour l'unite en fct de dt
         if self.cooldown > 0:
             self.cooldown = max(0, self.cooldown - dt)
+        self.deplacer(dt)
 
     

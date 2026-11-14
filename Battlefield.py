@@ -1,6 +1,4 @@
-from unite import Unite
-import UniteParthes
-import UniteRomaine
+from Unite import Unite
 
 class Battlefield :
     def __init__(self) :
@@ -9,31 +7,9 @@ class Battlefield :
         self.unites = []
         self.obstacles= []
         self.castle = None
-        self.id_counter = 1
 
 
-    def ajouter_unite(self,unite: Unite,type: str, team: str, x: int, y: int) :
-        if team == "romain" :
-            if type == "legionnaire" :
-                unite = UniteRomaine.Legionnaire(uid=self.id_counter, x=x, y=y)
-                self.id_counter += 1
-            elif type == "trebuchet" :
-                unite = UniteRomaine.Trebuchet(uid=self.id_counter, x=x, y=y)
-                self.id_counter += 1
-            else :
-                raise ValueError("Type d'unité romaine inconnu")
-        elif team == "parthes" :
-            if type == "archer" :
-                unite = UniteParthes.UniteArchers(uid=self.id_counter, x=x, y=y)
-                self.id_counter += 1
-            elif type == "cataphract" :
-                unite = UniteParthes.UniteCataphract(uid=self.id_counter, x=x, y=y)
-                self.id_counter += 1
-            else :
-                raise ValueError("Type d'unité parthe inconnu")
-        else :
-            raise ValueError("Équipe inconnue")
-
+    def ajouter_unite(self,unite: Unite) :
         self.unites.append(unite)
 
 

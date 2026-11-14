@@ -1,5 +1,6 @@
 from Arbirtre import Arbirtre
 from SimpleIA import SimpleIA
+import Battlefield
 TOURS_MAX = 500
 
 arbitre = Arbirtre()

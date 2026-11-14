@@ -44,3 +44,27 @@ def Carrhae(
 
         clock.tick(100)
     pygame.quit()
+
+    def ajouter_unite(self,unite: Unite,type: str, team: str, x: int, y: int) :
+            if team == "romain" :
+                if type == "legionnaire" :
+                    unite = UniteRomaine.Legionnaire(uid=self.id_counter, x=x, y=y)
+                    self.id_counter += 1
+                elif type == "trebuchet" :
+                    unite = UniteRomaine.Trebuchet(uid=self.id_counter, x=x, y=y)
+                    self.id_counter += 1
+                else :
+                    raise ValueError("Type d'unité romaine inconnu")
+            elif team == "parthes" :
+                if type == "archer" :
+                    unite = UniteParthes.UniteArchers(uid=self.id_counter, x=x, y=y)
+                    self.id_counter += 1
+                elif type == "cataphract" :
+                    unite = UniteParthes.UniteCataphract(uid=self.id_counter, x=x, y=y)
+                    self.id_counter += 1
+                else :
+                    raise ValueError("Type d'unité parthe inconnu")
+            else :
+                raise ValueError("Équipe inconnue")
+    
+            self.unites.append(unite)

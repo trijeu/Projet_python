@@ -51,7 +51,7 @@ class Unite:
         self.is_alive = True
         self.cooldown = 0.0
         self.target = None
-        self.destination = () #destination tuple (x, y) vers laquelle l'unité se déplace
+        self.destination = None #destination tuple (x, y) vers laquelle l'unité se déplace
 
 
     def take_damage(self, attack, attack_type, bonus = 0):#Self prend des dégats en paramètres
@@ -67,25 +67,27 @@ class Unite:
         if self.hp == 0:
             self.is_alive = False
 
-    def attaquer(self, cible: "Unite", type_attaque: str = None, bonus: int = 0):#self attaque une cible
-        if type_attaque is None:
-            type_attaque = self.type_degat
+    """def attaquer(self, cible: "Unite", attack_type: str = None, bonus: int = 0):#self attaque une cible
+        if attack_type is None:
+            attack_type = self.attack_type
 
-        if type_attaque == "melee":
+        if attack_type == "melee":
             armure = cible.melee_armor
 
-        elif type_attaque=="piercing" :
+        elif attack_type=="piercing" :
             armure = cible.piercing_armor
 
         else:
-            raise ValueError(f"Type d'attaque inconnu : {type_attaque}")
+            raise ValueError(f"Type d'attaque inconnu : {attack_type}")
 
-        degats = max(1, self.degat + bonus - armure)
-        cible.vie = max(0, cible.vie - degats)
+        degats = max(1, self.attack + bonus - armure)
+        cible.hp = max(0, cible.hp - degats)"""#Voir take_damage pour moins de paramètres
 
 
     def deplacer(self, dt):#Deplace self en fct de dt, speed et sa destination
         if not self.is_alive:
+            return
+        if self.destination is None:
             return
 
         target_x = self.destination[0]

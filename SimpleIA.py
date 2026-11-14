@@ -1,13 +1,30 @@
 import random
+import Battlefield
+import Unite
 
 
 class SimpleIA:
-    def __init__(self, mon_equipe , dictionnaires_unites):
-         self.mon_equipe = mon_equipe;
-         self.mes_unites = dictionnaires_unites;
+    def __init__(self, liste_unites, equipe: str):
+        self.mon_equipe = []
+        self.equipe_adverse = []
+        self.liste_unites = liste_unites;
+        self.mon_type = equipe
 
-    def jouer_tour(self , arbitre):
-        for nom , unite in self.mes_unites.items():
-            directions = [(0,1) , (0 ,-1) , (1,0) , (0,-1) , (1,1) ]
-            dx , dy = random.choice(directions)
-            arbitre.deplacer_unite(unite,dx,dy)
+    def decide(self , observation):
+        orders = []
+        #analyse la situation et décide des actions à prendre pour chaque unité
+
+        return orders
+        
+        
+        """
+        self.mon_equipe = arbitre.get_units_by_team(self.mon_equipe)
+        self.equipe_adverse = arbitre.get_units_by_team(self.equipe_adverse)
+        for unite in self.mon_equipe:
+            for adversaire in self.equipe_adverse:
+                if abs(unite.x - adversaire.x) <= 1 and abs(unite.y - adversaire.y) <= 1:
+                    unite.attaquer(adversaire)
+                    if not adversaire.is_alive:
+                        arbitre.supprimer_unite(adversaire)
+                    break
+            unite.deplacer_unite(unite,dx,dy)"""

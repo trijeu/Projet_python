@@ -1,1 +1,10 @@
 To do:
+Fichier	            Ce qu'il contient
+
+main.py	            Lancement Pygame et événements clavier
+game.py	            Simulation, horloge, coordination et victoire
+battlefield.py	    Carte, unités présentes, obstacles et collisions
+units.py	        Unit, Legionary, Trebuchet, Cataphract, CavalryArcher
+castle.py	        Classe Castle, points de vie et défense
+ai.py	            Interface des généraux et IA de référence
+renderer.py	        Affichage graphique uniquement

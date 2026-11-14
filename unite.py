@@ -51,7 +51,7 @@ class Unite:
         self.is_alive = True
         self.cooldown = 0.0
         self.target = None
-        self.destination = None
+        self.destination = ()
 
 
     def take_damage(self, attack, attack_type, bonus = 0):#Self prend des dégats en paramètres
@@ -84,10 +84,12 @@ class Unite:
         cible.vie = max(0, cible.vie - degats)
 
 
-    def deplacer(self ,target_x,target_y, dt):#Deplace self en fct de dt, speed et target_x_y
+    def deplacer(self, dt):#Deplace self en fct de dt, speed et sa destination
         if not self.is_alive:
             return
 
+        target_x = self.destination[0]
+        target_y = self.destination[1]
         dx = target_x - self.x
         dy = target_y - self.y
         distance = (dx**2 + dy**2)**0.5

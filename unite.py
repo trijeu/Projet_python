@@ -1,5 +1,8 @@
 #classe abstraite
 
+from math import hypot
+
+
 class Unite:
     """ def __init__(self, x: float, y: float, vie: int, degat: int, type_degat: str, reload: float, melee_armor: int, piercing_armor: int, portee: int, speed: float, taille: float):
         self.vie = vie
@@ -108,18 +111,27 @@ class Unite:
         if self.destination is None:
             return
 
-        target_x = self.destination[0]
-        target_y = self.destination[1]
+        target_x, target_y = self.destination
         dx = target_x - self.x
         dy = target_y - self.y
         distance = (dx**2 + dy**2)**0.5
 
-        if distance == 0:
+        approximation = hypot(dx, dy)
+        if approximation <= 0.05:
+            self.x = target_x
+            self.y = target_y
+            self.destination = None
             return
+
 
         etape = min(self.speed * dt, distance)
         self.x += (dx / distance) * etape
         self.y += (dy / distance) * etape
+
+        if etape >= distance:
+            self.x = target_x
+            self.y = target_y
+            self.destination = None
     
     def update(self, dt):#met a jour l'unite en fct de dt
         if self.cooldown > 0:

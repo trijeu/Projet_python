@@ -35,7 +35,7 @@ OFFSET_Y = H / 4
 VITESSE_CAM = 400
 
 # Paramètres minimap
-MINI_TAILLE = 200
+MINI_TAILLE = 175
 MINI_X = W - MINI_TAILLE - 20
 MINI_Y = 20
 
@@ -249,7 +249,7 @@ while game:
         )
 
 #Affichage
-    screen.fill("white")
+    screen.fill("black")
 
     for i in range(NB_TUILES):
         for j in range(NB_TUILES):

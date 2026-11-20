@@ -72,10 +72,10 @@ class Trebuchet(Unite):
             max_hp=150,
             attack=250,
             attack_type="piercing",
-            reload_time=0.0,
+            reload_time=10.0,
             melee_armor=2,
             piercing_armor=8,
-            range=0,
+            range=16,
             speed=0.8,
             radius=1.0,
         )
@@ -92,8 +92,9 @@ class Trebuchet(Unite):
 
 
     def update(self, dt):
-        self.update(dt)
-
+        if self.cooldown > 0:
+            self.cooldown = max(0, self.cooldown - dt)
+        
         if self.temps_restant_depaquetage > 0:
             self.temps_restant_depaquetage = max(0, self.temps_restant_depaquetage - dt)
 

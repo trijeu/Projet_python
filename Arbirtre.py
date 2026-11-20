@@ -1,5 +1,5 @@
-from UniteParthes import UniteArchers
-from UniteRomaine import Legionnaire
+import UniteRomaine
+import UniteParthes
 
 class Arbirtre:
     def __init__(self,taille_carte = 120):

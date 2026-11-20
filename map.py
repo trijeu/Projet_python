@@ -220,7 +220,7 @@ while game:
             mini_y = my - MINI_Y
 
             # On vérifie que le clic est dans le losange
-            distance = abs(mini_x - MINI_TAILLE / 2) + abs(mini_y - MINI_TAILLE / 2)
+            distance = abs(mini_ x - MINI_TAILLE / 2) + abs(mini_y - MINI_TAILLE / 2)
 
             if distance <= MINI_TAILLE / 2:
 

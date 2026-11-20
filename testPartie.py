@@ -1,12 +1,17 @@
 from Arbirtre import Arbirtre
 from SimpleIA import SimpleIA
 import Battlefield
+from UniteParthes import UniteArchers
+from UniteRomaine import Legionnaire
+
 TOURS_MAX = 500
+battlefield = Battlefield.Battlefield()
+battlefield.ajouter_unite(Legionnaire(uid=1,x=10,y=10))
+battlefield.ajouter_unite(UniteArchers(uid=0,x=20,y=20))
+arbitre = Arbirtre(battlefield = battlefield)
 
-arbitre = Arbirtre()
-
-ia_romaine = SimpleIA("Romains",arbitre.unites_romaines)
-ia_parthes = SimpleIA("Parthes",arbitre.unites_Parthe)
+ia_romaine = SimpleIA("romain")
+ia_parthes = SimpleIA("parthe")
 gagnant = None
 while arbitre.tour < TOURS_MAX:
     arbitre.tour += 1

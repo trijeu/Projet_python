@@ -1,13 +1,17 @@
 import random
 
+from Battlefield import Battlefield
+
 
 class SimpleIA:
-    def __init__(self, mon_equipe , dictionnaires_unites):
+    def __init__(self, mon_equipe):
          self.mon_equipe = mon_equipe
-         self.mes_unites = dictionnaires_unites
 
     def jouer_tour(self , arbitre):
-        for nom , unite in self.mes_unites.items():
-            directions = [(0,1) , (0 ,-1) , (1,0) , (0,-1) , (1,1) ]
-            dx , dy = random.choice(directions)
-            arbitre.deplacer_unite(unite,dx,dy)
+        mes_unites = [ u for u in arbitre.battlefield.get_units_by_team(self.mon_equipe) if u.is_alive]
+        if not mes_unites:
+            return
+        directions = [(0,1) , (0 ,-1) , (1,0) , (0,-1) , (1,1) ]
+        dx , dy = random.choice(directions)
+        for unite in mes_unites:
+            arbitre.deplacer_unite(unite , dx , dy)

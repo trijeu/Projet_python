@@ -1,4 +1,4 @@
-# classe abstraite
+#classe abstraite
 
 from math import hypot
 
@@ -17,7 +17,8 @@ class Unite:
         self.x = x
         self.y = y
         self.cooldown = 0.0
-        self.alive = True """  # Nouvelle version de l'init selon les nouveaux paramètres de Unite
+        self.alive = True """#Nouvelle version de l'init selon les nouveaux paramètres de Unite
+
 
     def __init__(
         self,
@@ -51,13 +52,14 @@ class Unite:
         self.speed = speed
         self.radius = radius
 
-        # Etat de l'unité
+        #Etat de l'unité
         self.is_alive = True
         self.cooldown = 0.0
         self.target = None
-        self.destination = None  # destination tuple (x, y) vers laquelle l'unité se déplace
+        self.destination = None #destination tuple (x, y) vers laquelle l'unité se déplace
 
-    def distance(self, cible) -> float:  # Retourne la distance entre self et cible
+
+    def distance(self,cible) -> float:#Retourne la distance entre self et cible
         return ((self.x - cible.x) ** 2 + (self.y - cible.y) ** 2) ** 0.5
 
 
@@ -68,27 +70,17 @@ class Unite:
         if type_attaque == "piercing" and self.range > 0:
             return distance <= self.range + cible.radius
         if type_attaque == "melee":
-
-            portee = self.radius + cible.radius + 0.25  # On ajoute une petite marge au corps à corps
+            portee = self.radius + cible.radius + 0.25 #On ajoute une petite marge au corps à corps
             return distance <= portee
 
-            armure = cible.melee_armor
-
-        else:
-            raise ValueError(f"Type d'attaque inconnu : {type_attaque}")
-        
-
-    def deplacer(self, nouveau_x, nouveau_y):
-        self.x = nouveau_x
-        self.y = nouveau_y
 
 
-    def take_damage(self, attack, attack_type, bonus = 0):  # Méthode interne, utiliser attaquer() pour infliger des dégâts à une cible
+    def take_damage(self, attack, attack_type, bonus = 0):#Méthode interne, utiliser attaquer() pour infliger des dégâts à une cible
         if attack_type == "melee":
             armure = self.melee_armor
         elif attack_type == "piercing":
             armure = self.piercing_armor
-        else:
+        else: 
             raise ValueError("Type d'attaque invalide")
 
         damage = max(1, attack - armure + bonus)
@@ -97,14 +89,14 @@ class Unite:
             self.is_alive = False
 
 
-    def attaquer(self, cible: "Unite", type_attaque: str = None, bonus: int = 0) -> bool:  # Renvoie un bool si l'attaque réussit
+    def attaquer(self, cible: "Unite", type_attaque: str = None, bonus: int = 0) -> bool:#Renvoie un bool si l'attaque réussit
         if not self.is_alive:
             return False
         if not cible.is_alive:
             return False
         if self.cooldown > 0:
             return False
-
+        
         attack_type = type_attaque or self.attack_type
         if not self.est_a_portee(cible):
             return False
@@ -114,7 +106,7 @@ class Unite:
         return True
 
 
-    def deplacer(self, dt):  # Méthode interne, euiliser update() ,deplace self en fct de dt, speed et sa destination
+    def deplacer(self, dt):#Méthode interne, euiliser update() ,deplace self en fct de dt, speed et sa destination
         if not self.is_alive:
             return
         if self.destination is None:
@@ -132,6 +124,7 @@ class Unite:
             self.destination = None
             return
 
+
         etape = min(self.speed * dt, distance)
         self.x += (dx / distance) * etape
         self.y += (dy / distance) * etape
@@ -140,16 +133,10 @@ class Unite:
             self.x = target_x
             self.y = target_y
             self.destination = None
-
-    def update(self, dt):  # met a jour l'unite en fct de dt
+    
+    def update(self, dt):#met a jour l'unite en fct de dt
         if self.cooldown > 0:
             self.cooldown = max(0, self.cooldown - dt)
         self.deplacer(dt)
 
-
-    def update_cooldown(self, dt):
-        if self.cooldown > 0:
-            self.cooldown -= dt
-
-            if self.cooldown < 0:
-                self.cooldown = 0
+    

@@ -23,11 +23,14 @@ class Chateau:
         self.cooldown = 0.0
         self.targets = []    
 
-    def take_damage(self, damage, attack_type):
-        pass
+    def take_damage(self, damage) -> bool:
+        if not self.is_alive:
+            return False
+        else:
+            self.hp = max(0, self.hp - damage)
+            if self.hp <= 0:
+                self.is_alive = False
+            return True
 
     def update(self, dt):
-        pass
-
-    def est_detruit(self):
-        pass
+        self.cooldown -= dt

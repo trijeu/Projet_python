@@ -1,11 +1,12 @@
-from UnitéParthes import UniteArchers
+from UniteParthes import UniteArchers
+from unite import Unite
+
+from Battlefield import Battlefield
 from UniteRomaine import Legionnaire
 
 class Arbirtre:
-    def __init__(self,taille_carte = 120):
-        self.taille_carte = taille_carte
-        self.unites_romaines = {"Legionnaire_1":Legionnaire(uid=1 , x=10,y =10)}
-        self.unite_Parthe = {"Archer_1":UniteArchers(uid = 2 , x=20,y=20)}
+    def __init__(self,battlefield):
+        self.battlefield = battlefield
         self.tour = 0
     def deplacer_unite(self, unite , dx , dy):
         nx = unite.x +dx
@@ -16,8 +17,10 @@ class Arbirtre:
             return True
         return False
     def partie_terminee(self):
-        if not self.unite_Parthe:
+        romains_vivants = [ u for u in self.battlefield.get_units_by_team("romain") if u.is_alive]
+        parthes_vivants = [ u for u in self.battlefield.get_units_by_team("parthes") if u.is_alive]
+        if not parthes_vivants:
             return "Romains"
-        if not self.unites_romaines:
-            return ("Parthes")
+        if not romains_vivants:
+            return "Parthes"
         return None

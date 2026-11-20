@@ -1,7 +1,9 @@
 import pygame
+
 from Battlefield import Battlefield
 from UniteRomaine import Legionnaire
 from SimpleIA import SimpleIA
+
 
 
 """
@@ -38,43 +40,45 @@ OFFSET_Y = H / 4
 VITESSE_CAM = 400
 
 # Paramètres minimap
-MINI_TAILLE = 200
+MINI_TAILLE = 175
 MINI_X = W - MINI_TAILLE - 20
 MINI_Y = 20
 
-
-#Application des textures d'hebre
+# Application des textures d'hebre
 herbe = pygame.image.load("herbe.png").convert_alpha()
-herbe = pygame.transform.scale(herbe, (TUILE_W, TUILE_H))
+herbe = pygame.transform.scale(herbe, (int(TUILE_W), int(TUILE_H)))
 chateau_base = pygame.image.load("chateau.png").convert_alpha()
 # Découpage en polygon
-masque = pygame.Surface((TUILE_W, TUILE_H), pygame.SRCALPHA)
+masque = pygame.Surface((int(TUILE_W), int(TUILE_H)), pygame.SRCALPHA)
 
 pygame.draw.polygon(masque, (255, 255, 255), [
-    (TUILE_W // 2, 0),
-    (TUILE_W, TUILE_H // 2),
-    (TUILE_W // 2, TUILE_H),
-    (0, TUILE_H // 2)
+    (int(TUILE_W) // 2, 0),
+    (int(TUILE_W), int(TUILE_H) // 2),
+    (int(TUILE_W) // 2, int(TUILE_H)),
+    (0, int(TUILE_H) // 2)
 ])
-class PetitArbritre:
-    def deplacer_unite(selfself, unite, dx, dy):
-        unite.destination = (unite.x +dx, unite.y +dy)
+
+herbe.blit(masque, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+herbe_base = herbe.copy()
+
+class PetitArbitre:
+    def deplacer_unite(self, unite, dx, dy):
+        unite.destination = (unite.x + dx, unite.y + dy)
+
 
 champ_bataille = Battlefield()
 champ_bataille.largeur = NB_TUILES
 champ_bataille.hauteur = NB_TUILES
 
-unite_test = Legionnaire(1, 55.0, 55,0)
+unite_test = Legionnaire(1, 55.0, 55.0)
 champ_bataille.ajouter_unite(unite_test)
-ia_test = SimpleIA("romain", {"legionnaire_1": unite_test})
-arbitre_test = PetitArbritre()
 
-#Horloge pourbouger les unitées
+ia_test = SimpleIA("romain", {"legionnaire_1": unite_test})
+arbitre_test = PetitArbitre()
+
 intervalle_ms = 500
 dernier_changement_ms = pygame.time.get_ticks()
 
-herbe.blit(masque, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-herbe_base = herbe.copy()
 
 
 # Conversion des coordonées de la carte vers l'écran
@@ -96,8 +100,7 @@ def convertisseur_inverse(sx, sy):
     return coord_x, coord_y
 
 
-#Affichage de la tuile
-
+# Affichage de la tuile
 def creation_tuile(x, y):
     sx, sy = convertisseur_iso(x, y)
 
@@ -107,11 +110,12 @@ def creation_tuile(x, y):
     # Affichage de l'herbe sans bordure
     screen.blit(herbe, position)
 
+
 def afficher_chateau():
     x, y = convertisseur_iso(NB_TUILES // 2, NB_TUILES // 2)
 
-    largeur = (int(chateau_base.get_width() * ZOOM))/2
-    hauteur = (int(chateau_base.get_height() * ZOOM))/2
+    largeur = max(1, int(chateau_base.get_width() * ZOOM / 2))
+    hauteur = max(1, int(chateau_base.get_height() * ZOOM / 2))
 
     chateau = pygame.transform.scale(chateau_base, (largeur, hauteur))
 
@@ -120,10 +124,13 @@ def afficher_chateau():
 
     screen.blit(chateau, position)
 
+
 def afficher_unite(unite):
     sx, sy = convertisseur_iso(unite.x, unite.y)
     rayon = max(4, int(6 * ZOOM))
     pygame.draw.circle(screen, (220, 40, 40), (int(sx), int(sy)), rayon)
+
+
 
 mini_map = pygame.Surface((MINI_TAILLE, MINI_TAILLE), pygame.SRCALPHA)
 
@@ -155,15 +162,13 @@ pygame.draw.polygon(mini_masque, (255, 255, 255), [
 mini_map.blit(mini_masque, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
 
-
 # Conversion vers la mini-carte 2.5d
-
-
 def convertisseur_mini(x, y):
     mx = MINI_TAILLE / 2 + (x - y) * MINI_TAILLE / (2 * NB_TUILES)
     my = (x + y) * MINI_TAILLE / (2 * NB_TUILES)
 
     return mx, my
+
 
 def afficher_minimap():
     screen.blit(mini_map, (MINI_X, MINI_Y))
@@ -194,6 +199,7 @@ def afficher_minimap():
         (MINI_X + MINI_TAILLE / 2, MINI_Y + MINI_TAILLE),
         (MINI_X, MINI_Y + MINI_TAILLE / 2)
     ], 2)
+
 
 while game:
 
@@ -229,8 +235,34 @@ while game:
                 OFFSET_X = W / 2 - (nouvelle_x - nouvelle_y) * TUILE_W / 2
                 OFFSET_Y = H / 2 - (nouvelle_x + nouvelle_y) * TUILE_H / 2
 
+        # Ajout du Zoom / Dézoom et d'un système de zoom maximal et minimal sinon il y avait des bugs
+        # Zoom avec la molette
+        if event.type == pygame.MOUSEWHEEL:
 
-#Déplacements caméra zoom dézoom et déplacements cam
+            if event.y > 0:
+                ZOOM += 0.05
+
+            if event.y < 0:
+                ZOOM -= 0.05
+
+            # Zoom min et Max pour éviter les bugs
+            if ZOOM < ZOOM_MIN:
+                ZOOM = ZOOM_MIN
+
+            if ZOOM > ZOOM_MAX:
+                ZOOM = ZOOM_MAX
+
+            # Modification de la taille des tuiles
+            TUILE_W = 64 * ZOOM
+            TUILE_H = 32 * ZOOM
+
+            # Modification de la texture
+            herbe = pygame.transform.scale(
+                herbe_base,
+                (int(TUILE_W), int(TUILE_H))
+            )
+
+    # Déplacements caméra zoom dézoom et déplacements cam
     touches = pygame.key.get_pressed()
 
     if touches[pygame.K_LEFT]:
@@ -253,35 +285,9 @@ while game:
     for unite in champ_bataille.get_alive_units():
         unite.update(temps)
 
-    #Ajout du Zoom / Dézoom et d'un système de zoom maximal et minimal sinon il y avait des bugs
-    # Zoom avec la molette
-    if event.type == pygame.MOUSEWHEEL:
 
-        if event.y > 0:
-            ZOOM += 0.05
-
-        if event.y < 0:
-            ZOOM -= 0.05
-
-        # Zoom min et Max pour éviter les bugs
-        if ZOOM < ZOOM_MIN:
-            ZOOM = ZOOM_MIN
-
-        if ZOOM > ZOOM_MAX:
-            ZOOM = ZOOM_MAX
-
-        # Modification de la taille des tuiles
-        TUILE_W = 64 * ZOOM
-        TUILE_H = 32 * ZOOM
-
-        # Modification de la texture
-        herbe = pygame.transform.scale(
-            herbe_base,
-            (int(TUILE_W), int(TUILE_H))
-        )
-
-#Affichage
-    screen.fill("white")
+    # Affichage
+    screen.fill("black")
 
     for i in range(NB_TUILES):
         for j in range(NB_TUILES):
@@ -292,10 +298,13 @@ while game:
             if -TUILE_W < sx < W + TUILE_W and -TUILE_H < sy < H + TUILE_H:
                 creation_tuile(i, j)
 
-    #Affichage d'une unité
     afficher_chateau()
+
+
     for unite in champ_bataille.get_alive_units():
         afficher_unite(unite)
+
+
     afficher_minimap()
 
     pygame.display.flip()

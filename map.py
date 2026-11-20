@@ -1,4 +1,7 @@
 import pygame
+from Battlefield import Battlefield
+from UniteRomaine import Legionnaire
+from SimpleIA import SimpleIA
 
 
 """
@@ -53,6 +56,22 @@ pygame.draw.polygon(masque, (255, 255, 255), [
     (TUILE_W // 2, TUILE_H),
     (0, TUILE_H // 2)
 ])
+class PetitArbritre:
+    def deplacer_unite(selfself, unite, dx, dy):
+        unite.destination = (unite.x +dx, unite.y +dy)
+
+champ_bataille = Battlefield()
+champ_bataille.largeur = NB_TUILES
+champ_bataille.hauteur = NB_TUILES
+
+unite_test = Legionnaire(1, 55.0, 55,0)
+champ_bataille.ajouter_unite(unite_test)
+ia_test = SimpleIA("romain", {"legionnaire_1": unite_test})
+arbitre_test = PetitArbritre()
+
+#Horloge pourbouger les unitées
+intervalle_ms = 500
+dernier_changement_ms = pygame.time.get_ticks()
 
 herbe.blit(masque, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 herbe_base = herbe.copy()
@@ -100,6 +119,7 @@ def afficher_chateau():
     position = (x - largeur // 2, y - hauteur)
 
     screen.blit(chateau, position)
+
 def afficher_unite(unite):
     sx, sy = convertisseur_iso(unite.x, unite.y)
     rayon = max(4, int(6 * ZOOM))
@@ -225,6 +245,14 @@ while game:
     if touches[pygame.K_DOWN]:
         OFFSET_Y -= VITESSE_CAM * temps
 
+    maintenant_ms = pygame.time.get_ticks()
+    if maintenant_ms - dernier_changement_ms >= intervalle_ms:
+        ia_test.jouer_tour(arbitre_test)
+        dernier_changement_ms = maintenant_ms
+
+    for unite in champ_bataille.get_alive_units():
+        unite.update(temps)
+
     #Ajout du Zoom / Dézoom et d'un système de zoom maximal et minimal sinon il y avait des bugs
     # Zoom avec la molette
     if event.type == pygame.MOUSEWHEEL:
@@ -266,6 +294,8 @@ while game:
 
     #Affichage d'une unité
     afficher_chateau()
+    for unite in champ_bataille.get_alive_units():
+        afficher_unite(unite)
     afficher_minimap()
 
     pygame.display.flip()

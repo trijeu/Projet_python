@@ -237,14 +237,13 @@ while game:
 
         # Ajout du Zoom / Dézoom et d'un système de zoom maximal et minimal sinon il y avait des bugs
         # Zoom avec la molette
-        if event.type == pygame.MOUSEWHEEL:
-
-            if event.y > 0:
+        if event.type == pygame.KEYDOWN:
+            #SI + ou - pressé le zoom est modifié, (ajout des différents plus et moins du clavier)
+            if event.key == pygame.K_PLUS or event.key == pygame.K_KP_PLUS or event.key == pygame.K_EQUALS:
                 ZOOM += 0.05
 
-            if event.y < 0:
+            if event.key == pygame.K_MINUS or event.key == pygame.K_KP_MINUS:
                 ZOOM -= 0.05
-
             # Zoom min et Max pour éviter les bugs
             if ZOOM < ZOOM_MIN:
                 ZOOM = ZOOM_MIN
@@ -276,6 +275,7 @@ while game:
 
     if touches[pygame.K_DOWN]:
         OFFSET_Y -= VITESSE_CAM * temps
+
 
     maintenant_ms = pygame.time.get_ticks()
     if maintenant_ms - dernier_changement_ms >= intervalle_ms:

@@ -133,38 +133,44 @@ class Unite:
         return True
 
 
-    def deplacer(self, dt):  # Méthode interne, euiliser update() ,deplace self en fct de dt, speed et sa destination
-        if not self.is_alive:
-            return
-        if self.destination is None:
-            return
 
-        target_x, target_y = self.destination
-        dx = target_x - self.x
-        dy = target_y - self.y
-        distance = (dx**2 + dy**2)**0.5
+    def distance_point(self, x: float, y: float) -> float:#Distance entre le centre de self et le point (x, y)
+        return hypot(x - self.x, y - self.y)
 
-        approximation = hypot(dx, dy)
-        if approximation <= 0.05:
-            self.x = target_x
-            self.y = target_y
+
+    def distance_bord(self, cible) -> float:#Distance bord a bord (0 = les deux cercles se touchent)
+        return self.distance(cible) - self.radius - cible.radius
+
+    def calculer_pas(self, cible_x: float, cible_y: float, dt: float):#Deplacement (dx, dy) voulu pendant dt, sans collisions
+        distance = self.distance_point(cible_x, cible_y)
+        pas = self.speed * dt
+        if distance == 0 or pas <= 0:
+            return 0.0, 0.0
+        if distance <= pas:#on arrive pile sur la cible sans la depasser
+            return cible_x - self.x, cible_y - self.y
+        facteur = pas / distance
+        return (cible_x - self.x) * facteur, (cible_y - self.y) * facteur
+
+    def deplacer(self, dt, battlefield=None) -> bool:#Methode interne, utiliser update(). Avance vers self.destination. Renvoie True a l'arrivee
+        if not self.is_alive or self.destination is None:
+            return False
+        cible_x, cible_y = self.destination
+
+        if battlefield is not None:#collisions + bords de carte + falaises
+            battlefield.deplacer_unite(self, cible_x, cible_y, dt)
+        else:#mouvement libre, sans collisions
+            dx, dy = self.calculer_pas(cible_x, cible_y, dt)
+            self.x += dx
+            self.y += dy
+
+        if self.distance_point(cible_x, cible_y) < 1e-6:
+            self.x, self.y = cible_x, cible_y
             self.destination = None
-            return
+            return True
+        return False
 
-        etape = min(self.speed * dt, distance)
-        self.x += (dx / distance) * etape
-        self.y += (dy / distance) * etape
 
-        if etape >= distance:
-            self.x = target_x
-            self.y = target_y
-            self.destination = None
-
-    def update(self, dt):  # met a jour l'unite en fct de dt
-        if self.cooldown > 0:
-            self.cooldown = max(0, self.cooldown - dt)
-        self.deplacer(dt)
-
+   
 
     def update_cooldown(self, dt):
         if self.cooldown > 0:
@@ -172,3 +178,8 @@ class Unite:
 
             if self.cooldown < 0:
                 self.cooldown = 0
+
+    def update(self, dt, battlefield=None):#met a jour l'unite en fct de dt
+        if self.cooldown > 0:
+            self.cooldown = max(0, self.cooldown - dt)
+        self.deplacer(dt, battlefield)

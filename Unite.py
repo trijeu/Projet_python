@@ -62,7 +62,7 @@ class Unite:
 
 
 
-   def attaquer(self, cible: "Unite", type_attaque: str = None, bonus: int = 0):
+    def attaquer(self, cible: "Unite", type_attaque: str = None, bonus: int = 0):
         if self.cooldown > 0:
             return 0
         if type_attaque is None:

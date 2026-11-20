@@ -1,4 +1,4 @@
-from unite import Unite
+from Unite import Unite
 from Battlefield import Battlefield
 
 class Arbirtre:
@@ -8,7 +8,7 @@ class Arbirtre:
     def deplacer_unite(self, unite , dx , dy):
         nx = unite.x +dx
         ny = unite.y +dy
-        if 0 <= nx < self.battlefield.largeur and 0 <= ny < self.battlefield.longueur:
+        if 0 <= nx < self.battlefield.largeur and 0 <= ny < self.battlefield.hauteur:
             unite.x = nx
             unite.y = ny
             return True

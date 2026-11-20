@@ -1,5 +1,5 @@
-import UniteRomaine
-import UniteParthes
+from Unite import Unite
+from Battlefield import Battlefield
 
 class Arbirtre:
     def __init__(self,battlefield, ia_romaine, ia_parthe):

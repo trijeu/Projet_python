@@ -30,12 +30,16 @@ class Battlefield :
         return [u for u in self.unites if u.team == team and u.is_alive]
 
 
-    def est_dans_limites(self):
-        pass
+    def est_dans_limites(self, x, y) -> bool: # Vérifie si l'unité est dans les limites de la map
+        bordure = self.largeur /2
+        return (-bordure < x < bordure) and (-bordure < y < bordure)
 
 
-    def position_libre(self):
-        pass
-
-
+    def position_libre(self, x, y): # Vérifie si l'emplacement visé par l'unité est libre (hitbox des autres)
+        for i in self.unites:
+            lim = i.radius  /2
+            if i.x - lim < x < i.x + lim or i.y - lim < y < i.y + lim:
+                return False
+        return True
+        
     

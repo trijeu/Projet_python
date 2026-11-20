@@ -2,7 +2,7 @@ import UniteRomaine
 import UniteParthes
 
 class Arbirtre:
-    def __init__(self,battlefield, ia_romaine = 0, ia_parthe = 0):
+    def __init__(self,battlefield, ia_romaine, ia_parthe):
         self.battlefield = battlefield
         self.taille_carte = battlefield.largeur
         self.ia_romaine = ia_romaine
@@ -27,9 +27,8 @@ class Arbirtre:
         self.executer_ordres(ordres)
 
         for u in self.battlefield.unites:
-            u.update
+            u.update(dt)
         
-
 
     def executer_ordres(self, ordres: list): # éxecute la liste d'ordre de l'ia [{}, {}]
         for ordre in ordres:
@@ -37,12 +36,12 @@ class Arbirtre:
             if unite == None or not unite.is_alive:
                 continue
 
-        if ordre["type"] == "move":
-            unite.destination = ordre["dst"]
-        if ordre["type"] == "attack":
-            cible = next((u for u in self.battlefield.unites if u.uid == ordre["target_id"]),None)
-            if cible is not None:
-                unite.attaquer(cible)
+            if ordre["type"] == "move":
+                unite.destination = ordre["dst"]
+            if ordre["type"] == "attack":
+                cible = next((u for u in self.battlefield.unites if u.uid == ordre["target_id"]),None)
+                if cible is not None:
+                    unite.attaquer(cible)
 
 
     def verifier_victoire(self):

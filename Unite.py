@@ -61,13 +61,6 @@ class Unite:
         return ((self.x - cible.x) ** 2 + (self.y - cible.y) ** 2) ** 0.5
 
 
-
-    def attaquer(self, cible: "Unite", type_attaque: str = None, bonus: int = 0):
-        if self.cooldown > 0:
-            return 0
-        if type_attaque is None:
-            type_attaque = self.type_degat
-
     def est_a_portee(self, cible) -> bool:
         type_attaque = self.attack_type
         distance = self.distance(cible)
@@ -78,28 +71,6 @@ class Unite:
 
             portee = self.radius + cible.radius + 0.25  # On ajoute une petite marge au corps à corps
             return distance <= portee
-
-            armure = cible.melee_armor
-
-        elif type_attaque == "piercing":
-            armure = cible.piercing_armor
-
-        else:
-            raise ValueError(f"Type d'attaque inconnu : {type_attaque}")
-
-        degats = max(1, self.degat + bonus - armure)
-
-        cible.vie = max(0, cible.vie - degats)
-        if cible.vie == 0:
-            cible.alive = False
-
-        self.cooldown = self.reload
-
-        return degats
-
-    def deplacer(self, nouveau_x, nouveau_y):
-        self.x = nouveau_x
-        self.y = nouveau_y
 
 
     def take_damage(self, attack, attack_type, bonus = 0):  # Méthode interne, utiliser attaquer() pour infliger des dégâts à une cible
@@ -170,16 +141,6 @@ class Unite:
         return False
 
 
-   
-
-    def update_cooldown(self, dt):
-        if self.cooldown > 0:
-            self.cooldown -= dt
-
-            if self.cooldown < 0:
-                self.cooldown = 0
-
-    def update(self, dt, battlefield=None):#met a jour l'unite en fct de dt
+    def update(self, dt):
         if self.cooldown > 0:
             self.cooldown = max(0, self.cooldown - dt)
-        self.deplacer(dt, battlefield)

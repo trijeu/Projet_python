@@ -61,13 +61,6 @@ class Unite:
         return ((self.x - cible.x) ** 2 + (self.y - cible.y) ** 2) ** 0.5
 
 
-== == == =
-   def attaquer(self, cible: "Unite", type_attaque: str = None, bonus: int = 0):
-        if self.cooldown > 0:
-            return 0
-        if type_attaque is None:
-            type_attaque = self.type_degat
-
     def est_a_portee(self, cible) -> bool:
         type_attaque = self.attack_type
         distance = self.distance(cible)
@@ -81,21 +74,9 @@ class Unite:
 
             armure = cible.melee_armor
 
-        elif type_attaque == "piercing":
-            armure = cible.piercing_armor
-
         else:
             raise ValueError(f"Type d'attaque inconnu : {type_attaque}")
-
-        degats = max(1, self.degat + bonus - armure)
-
-        cible.vie = max(0, cible.vie - degats)
-        if cible.vie == 0:
-            cible.alive = False
-
-        self.cooldown = self.reload
-
-        return degats
+        
 
     def deplacer(self, nouveau_x, nouveau_y):
         self.x = nouveau_x

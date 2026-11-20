@@ -72,7 +72,7 @@ class Unite:
         if type_attaque == "melee":
             portee = self.radius + cible.radius + 0.25 #On ajoute une petite marge au corps à corps
             return distance <= portee
-
+        return False
 
 
     def take_damage(self, attack, attack_type, bonus = 0):#Méthode interne, utiliser attaquer() pour infliger des dégâts à une cible
@@ -133,6 +133,7 @@ class Unite:
             self.x = target_x
             self.y = target_y
             self.destination = None
+
     
     def update(self, dt):#met a jour l'unite en fct de dt
         if self.cooldown > 0:

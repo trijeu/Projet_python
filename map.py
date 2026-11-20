@@ -100,6 +100,10 @@ def afficher_chateau():
     position = (x - largeur // 2, y - hauteur)
 
     screen.blit(chateau, position)
+def afficher_unite(unite):
+    sx, sy = convertisseur_iso(unite.x, unite.y)
+    rayon = max(4, int(6 * ZOOM))
+    pygame.draw.circle(screen, (220, 40, 40), (int(sx), int(sy)), rayon)
 
 mini_map = pygame.Surface((MINI_TAILLE, MINI_TAILLE), pygame.SRCALPHA)
 
@@ -260,6 +264,7 @@ while game:
             if -TUILE_W < sx < W + TUILE_W and -TUILE_H < sy < H + TUILE_H:
                 creation_tuile(i, j)
 
+    #Affichage d'une unité
     afficher_chateau()
     afficher_minimap()
 

@@ -17,30 +17,30 @@ def Carrhae(
         map_size=(120,120),
         headless = False,
         speed = 1,
-    ):
-    
+):
+    headless = False
     if not headless:
         pygame.init()
         screen = pygame.display.set_mode((1280, 720))
         pygame.display.set_caption("Projet Python 3a AOE")
         clock = pygame.time.Clock()
 
-    Partie_en_cour = True
+    game = True
     #Création d'une tuile de 64x32 choix standard en vue iso
 
-    while Partie_en_cour:
+    while game:
         if not headless: #fermeture du jeu en mode non headless
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     game = False
+
+
+
+
         screen.fill("black")
         pygame.display.flip()
 
         clock.tick(100)
-
-        
-
-
     pygame.quit()
 
     """def ajouter_unite(self,unite: Unite, team: str, x: int, y: int) :

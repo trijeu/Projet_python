@@ -1,11 +1,12 @@
 from Arbirtre import Arbirtre
 from SimpleIA import SimpleIA
+import Battlefield
 TOURS_MAX = 500
 
 arbitre = Arbirtre()
 
 ia_romaine = SimpleIA("Romains",arbitre.unites_romaines)
-ia_parthes = SimpleIA("Parthes",arbitre.unite_Parthe)
+ia_parthes = SimpleIA("Parthes",arbitre.unites_Parthe)
 gagnant = None
 while arbitre.tour < TOURS_MAX:
     arbitre.tour += 1

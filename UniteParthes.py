@@ -1,4 +1,4 @@
-from unite import Unite
+from Unite import Unite
 
 
 '''class UniteParthe(Unite):
@@ -15,8 +15,9 @@ class UniteCataphract(Unite):
             x=x, 
             y=y,
             hp=150,
+            max_hp=150,
             attack=14,
-            type_attack="melee",
+            attack_type="melee",
             reload_time=1.7,
             melee_armor=5,
             piercing_armor=5,
@@ -27,8 +28,24 @@ class UniteCataphract(Unite):
         self.trample_damage_zone = 0.5
 
     def trample_attack(self, cibles_alentour: list):
+        if not self.is_alive or self.cooldown > 0:
+            return 0
+        nb_touches = 0
         for cible in cibles_alentour:
-            self.attaquer(cible, type_attaque="melee")
+            if not cible.is_alive:
+                continue
+            
+            dist = self.distance(cible)
+            portee = self.radius + cible.radius + self.trample_damage_zone
+
+            if dist  <= portee:
+                cible.take_damage(self.attack, "melee", bonus = 4)
+                nb_touches += 1
+            
+        if nb_touches > 0:
+            self.cooldown = self.reload_time
+        return nb_touches    
+        
 
 '''
 class UniteCastle(Unite):
@@ -63,8 +80,9 @@ class UniteArchers(Unite):
             x=x,
             y=y,
             hp=80,
+            max_hp=80,
             attack=12,
-            type_attack="piercing",
+            attack_type="piercing",
             reload_time=1.8,
             melee_armor=5,
             piercing_armor=6,

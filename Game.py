@@ -25,10 +25,10 @@ def Carrhae(
         pygame.display.set_caption("Projet Python 3a AOE")
         clock = pygame.time.Clock()
 
-    game = True
+    partie_en_cour = True
     #Création d'une tuile de 64x32 choix standard en vue iso
 
-    while game:
+    while partie_en_cour:
         if not headless: #fermeture du jeu en mode non headless
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

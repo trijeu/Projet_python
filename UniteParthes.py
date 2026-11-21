@@ -47,31 +47,6 @@ class UniteCataphract(Unite):
         return nb_touches    
         
 
-'''
-class UniteCastle(Unite):
-    def __init__(self,uid: int, x: float = 0.0, y: float = 0.0):
-        super().__init__(
-            uid=uid,
-            team = "parthe",
-            x=x,
-            y=y,
-            hp=1000,
-            attack=15,
-            type_attack="piercing",
-            reload_time=2.0,
-            melee_armor=0,
-            piercing_armor=13,
-            range=11,
-            speed=0,
-            radius=0
-        )
-        self.volley_count = 5  # Tir de salve (5 flèches)
-
-    def attaquer_salve(self, cible: Unite):
-        for _ in range(self.volley_count):
-            self.attaquer(cible, type_attaque="piercing")
-'''#Le chateau sera dans une classe à part, il est unique et un objectif
-
 class UniteArchers(Unite):
     def __init__(self,uid: int, x: float, y: float):
         super().__init__(

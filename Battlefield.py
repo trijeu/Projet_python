@@ -6,9 +6,7 @@ class Battlefield :
         self.largeur= 120
         self.hauteur= 120
         self.unites = []
-        self.unites_romaines = []
-        self.unites_parthes = []
-        self.obstacles= []
+        self.obstacles = []
         self.castle = None
 
 
@@ -57,8 +55,15 @@ class Battlefield :
 
 
     def get_unite(self, uid):
-        return next(
-            (u for u in self.unites if u.uid == uid),
-            None
-        )
-    
+        return next((u for u in self.unites if u.uid == uid),None)
+
+
+    def deplacer_unite(self, unite, dx, dy) -> bool: #Deplace l'unite si la position demandee est libre
+        nouveau_x = unite.x + dx
+        nouveau_y = unite.y + dy
+
+        if self.position_libre(unite, nouveau_x, nouveau_y):
+            unite.x = nouveau_x
+            unite.y = nouveau_y
+            return True
+        return False

@@ -4,21 +4,6 @@ from math import hypot
 
 
 class Unite:
-    """ def __init__(self, x: float, y: float, vie: int, degat: int, type_degat: str, reload: float, melee_armor: int, piercing_armor: int, portee: int, speed: float, taille: float):
-        self.vie = vie
-        self.degat = degat
-        self.type_degat = type_degat
-        self.reload = reload
-        self.melee_armor = melee_armor
-        self.piercing_armor = piercing_armor
-        self.portee = portee
-        self.speed = speed
-        self.taille = taille
-        self.x = x
-        self.y = y
-        self.cooldown = 0.0
-        self.alive = True """  # Nouvelle version de l'init selon les nouveaux paramètres de Unite
-
     def __init__(
         self,
         uid,
@@ -111,7 +96,7 @@ class Unite:
 
         if battlefield is not None:#collisions + bords de carte + falaises
             battlefield.deplacer_unite(self, cible_x, cible_y, dt)
-        else:#mouvement libre, sans collisions
+        else: #mouvement libre, sans collisions
             dx, dy = self.calculer_pas(cible_x, cible_y, dt)
             self.x += dx
             self.y += dy

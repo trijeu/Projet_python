@@ -104,24 +104,6 @@ class Unite:
         return True
 
 
-
-    """def distance_point(self, x: float, y: float) -> float:#Distance entre le centre de self et le point (x, y)
-        return hypot(x - self.x, y - self.y)
-
-
-    def distance_bord(self, cible) -> float:#Distance bord a bord (0 = les deux cercles se touchent)
-        return self.distance(cible) - self.radius - cible.radius
-
-    def calculer_pas(self, cible_x: float, cible_y: float, dt: float):#Deplacement (dx, dy) voulu pendant dt, sans collisions
-        distance = self.distance_point(cible_x, cible_y)
-        pas = self.speed * dt
-        if distance == 0 or pas <= 0:
-            return 0.0, 0.0
-        if distance <= pas:#on arrive pile sur la cible sans la depasser
-            return cible_x - self.x, cible_y - self.y
-        facteur = pas / distance
-        return (cible_x - self.x) * facteur, (cible_y - self.y) * facteur"""
-
     def deplacer(self, dt, battlefield=None) -> bool: # Methode interne, utiliser update(). Avance vers self.destination. Renvoie True a l'arrivee
         if not self.is_alive or self.destination is None:
             return False

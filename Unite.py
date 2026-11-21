@@ -105,7 +105,7 @@ class Unite:
 
 
 
-    def distance_point(self, x: float, y: float) -> float:#Distance entre le centre de self et le point (x, y)
+    """def distance_point(self, x: float, y: float) -> float:#Distance entre le centre de self et le point (x, y)
         return hypot(x - self.x, y - self.y)
 
 
@@ -120,9 +120,9 @@ class Unite:
         if distance <= pas:#on arrive pile sur la cible sans la depasser
             return cible_x - self.x, cible_y - self.y
         facteur = pas / distance
-        return (cible_x - self.x) * facteur, (cible_y - self.y) * facteur
+        return (cible_x - self.x) * facteur, (cible_y - self.y) * facteur"""
 
-    def deplacer(self, dt, battlefield=None) -> bool:#Methode interne, utiliser update(). Avance vers self.destination. Renvoie True a l'arrivee
+    def deplacer(self, dt, battlefield=None) -> bool: # Methode interne, utiliser update(). Avance vers self.destination. Renvoie True a l'arrivee
         if not self.is_alive or self.destination is None:
             return False
         cible_x, cible_y = self.destination
